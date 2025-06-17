@@ -3,8 +3,8 @@
 <p align="center">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Pandas_logo.svg/2560px-Pandas_logo.svg.png" width="90" alt="Pandas Logo">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/NumPy_logo_2020.svg/2560px-NumPy_logo_2020.svg.png" width="90" alt="NumPy Logo">
-  <img src="https://www.nltk.org/images/nltk-logo-dark.png" width="100" alt="NLTK Logo">
-  <img src="https://raw.githubusercontent.com/dmlc/xgboost/master/doc/logo/xgboost_logo.png" width="120" alt="XGBoost Logo">
+  <img src="https://miro.medium.com/v2/resize:fit:592/1*YM2HXc7f4v02pZBEO8h-qw.png" width="55" alt="NLTK Logo">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/XGBoost_logo.svg/2560px-XGBoost_logo.svg.png" width="60" alt="XGBoost Logo">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/1200px-Scikit_learn_logo_small.svg.png" width="110" alt="Scikit-learn Logo">
   <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" width="60" alt="Hugging Face Transformers Logo">
 </p>

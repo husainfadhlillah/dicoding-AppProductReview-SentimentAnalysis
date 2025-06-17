@@ -6,7 +6,7 @@
   <img src="https://www.nltk.org/images/nltk-logo-dark.png" width="100" alt="NLTK Logo">
   <img src="https://raw.githubusercontent.com/dmlc/xgboost/master/doc/logo/xgboost_logo.png" width="120" alt="XGBoost Logo">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/1200px-Scikit_learn_logo_small.svg.png" width="110" alt="Scikit-learn Logo">
-  <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" width="120" alt="Hugging Face Transformers Logo">
+  <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" width="60" alt="Hugging Face Transformers Logo">
 </p>
 
 Selamat datang di proyek _end-to-end_ untuk analisis sentimen ulasan aplikasi Tokopedia! Di dunia _e-commerce_ yang kompetitif, memahami suara pelanggan adalah kunci. Proyek ini mengotomatiskan proses analisis ribuan ulasan pengguna dari Google Play Store, mengubah teks kualitatif menjadi _insight_ kuantitatif yang dapat ditindaklanjuti.

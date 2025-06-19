@@ -6,6 +6,7 @@
   <img src="https://miro.medium.com/v2/resize:fit:592/1*YM2HXc7f4v02pZBEO8h-qw.png" width="55" alt="NLTK Logo">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/XGBoost_logo.svg/2560px-XGBoost_logo.svg.png" width="100" alt="XGBoost Logo">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/1200px-Scikit_learn_logo_small.svg.png" width="110" alt="Scikit-learn Logo">
+ <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Tensorflow_logo.svg/1200px-Tensorflow_logo.svg.png" width="50" alt="TensorFlow Logo">
   <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" width="60" alt="Hugging Face Transformers Logo">
 </p>
 
@@ -30,16 +31,16 @@ Proyek ini dirancang mengikuti siklus hidup ilmu data secara menyeluruh, dari hu
 
 **3. 🔬 Eksperimen & Pemodelan (4 Skema)**
 
-- Melatih dan membandingkan empat arsitektur model yang berbeda secara fundamental untuk menemukan pendekatan yang paling optimal.
+- Merancang, melatih, dan membandingkan empat arsitektur model yang berbeda untuk menemukan pendekatan yang paling optimal.
 
 **4. 📊 Evaluasi & Analisis Komparatif**
 
-- Mengevaluasi keempat model menggunakan metrik klasifikasi standar (_Accuracy, Precision, Recall, F1-Score_).
-- Menganalisis kelebihan dan kekurangan masing-masing pendekatan.
+- Mengevaluasi keempat model menggunakan metrik akurasi pada data latih dan data uji.
+- Menganalisis hasil untuk memilih model juara.
 
 **5. 💡 Inferensi Model Juara**
 
-- Menguji model dengan performa terbaik pada kalimat-kalimat baru untuk memvalidasi kemampuannya dalam skenario dunia nyata.
+- Menggunakan model dengan performa terbaik untuk memprediksi sentimen pada kalimat-kalimat baru untuk memvalidasi kemampuannya dalam skenario dunia nyata.
 
 ---
 
@@ -51,7 +52,7 @@ Data ulasan dikumpulkan menggunakan _script_ pada `scraping.ipynb` dengan _libra
 
 ### Tahap 2: Pra-pemrosesan Teks & Pelabelan
 
-Teks ulasan mentah dibersihkan melalui beberapa langkah penting untuk mempersiapkannya sebelum masuk ke model:
+Teks mentah dari ulasan sangat _noisy_. Oleh karena itu, dilakukan serangkaian proses pembersihan yang ketat:
 
 - **Case Folding**: Mengubah teks menjadi huruf kecil.
 - **Noise & Punctuation Removal**: Menghapus semua karakter yang tidak relevan.
@@ -62,54 +63,56 @@ Teks ulasan mentah dibersihkan melalui beberapa langkah penting untuk mempersiap
   - ⭐ 3: **Netral**
   - ⭐ 4-5: **Positif**
 
-### Tahap 3: Pemodelan & Eksperimen dengan 4 Skema
+### Tahap 3: Eksperimen dan Pelatihan Model
 
-Ini adalah inti dari proyek, di mana kami bereksperimen dengan empat pendekatan berbeda:
+Untuk menemukan model dengan performa terbaik, kami merancang dan menguji empat skema eksperimen yang berbeda, masing-masing dengan kombinasi algoritma, representasi fitur, dan rasio pembagian data yang unik.
 
-1.  **Model A: Random Forest + Word2Vec**
+1.  **Skema 1: Random Forest + Word2Vec (Target Akurasi > 92%)**
 
-    - **Arsitektur**: Model _ensemble_ klasik yang kuat dikombinasikan dengan _embedding_ **Word2Vec** untuk merepresentasikan makna kata secara kontekstual.
-    - **Tujuan**: Menguji kekuatan _machine learning_ tradisional dengan _feature engineering_ yang cerdas.
+    - **Arsitektur**: Model _ensemble_ klasik (Random Forest) yang dikombinasikan dengan _embedding_ **Word2Vec** untuk merepresentasikan makna kata secara kontekstual.
+    - **Fitur Unik**: Menggunakan pembagian data **90% data latih** dan **10% data uji** untuk memberikan lebih banyak data pada model saat proses pelatihan.
 
-2.  **Model B: XGBoost + Word2Vec**
+2.  **Skema 2: XGBoost + Word2Vec (Target Akurasi > 85%)**
 
-    - **Arsitektur**: Model _gradient boosting_ yang terkenal dengan kecepatan dan performanya, juga menggunakan **Word2Vec** sebagai input fitur.
-    - **Tujuan**: Membandingkan performa antara dua algoritma _ensemble_ terkemuka (Random Forest vs XGBoost) pada tugas yang sama.
+    - **Arsitektur**: Model _gradient boosting_ (XGBoost) yang terkenal dengan kecepatan dan performanya, juga menggunakan **Word2Vec** sebagai input fitur.
+    - **Fitur Unik**: Menggunakan pembagian data standar **80% data latih** dan **20% data uji**.
 
-3.  **Model C: Bi-LSTM (Deep Learning)**
+3.  **Skema 3: Logistic Regression + TF-IDF (Target Akurasi > 85%)**
 
-    - **Arsitektur**: Jaringan Saraf Tiruan Berulang (RNN) dengan arsitektur _Bidirectional Long Short-Term Memory_ menggunakan **Keras Embedding Layer**.
-    - **Tujuan**: Menguji kemampuan model _deep learning_ sekuensial dalam menangkap ketergantungan jangka panjang dalam teks.
+    - **Arsitektur**: Model linear sederhana (Logistic Regression) yang dipasangkan dengan metode representasi fitur klasik **TF-IDF** (Term Frequency-Inverse Document Frequency).
+    - **Fitur Unik**: Berfungsi sebagai _baseline_ yang kuat untuk melihat seberapa baik performa model sederhana dibandingkan dengan model yang lebih kompleks.
 
-4.  **Model D: IndoBERT (Transformer)**
-    - **Arsitektur**: Model Transformer _state-of-the-art_ yang sudah di-_pre-train_ pada korpus besar Bahasa Indonesia.
-    - **Tujuan**: Mengukur performa dari model bahasa skala besar yang canggih sebagai _benchmark_ teratas.
+4.  **Skema 4: Bi-LSTM (Deep Learning) (Target Akurasi > 85%)**
+    - **Arsitektur**: Jaringan Saraf Tiruan Berulang (_Bidirectional Long Short-Term Memory_) yang dibangun menggunakan Keras, dengan **Embedding Layer** yang dilatih dari awal.
+    - **Fitur Unik**: Dirancang untuk menangkap dependensi sekuensial dan konteks kalimat dari dua arah (depan ke belakang dan belakang ke depan).
 
 ---
 
 ## 🏆 Hasil Evaluasi & Model Juara
 
-Keempat model dievaluasi secara ketat pada data uji yang sama. Hasilnya memberikan _insight_ yang sangat menarik:
+Keempat skema model dievaluasi secara ketat berdasarkan performa akurasinya pada data latih dan data uji. Hasilnya dirangkum dalam tabel berikut:
 
-| Model                        | Akurasi  | Presisi  |  Recall  |  F1-Score   |
-| :--------------------------- | :------: | :------: | :------: | :---------: |
-| **Random Forest + Word2Vec** | **0.90** | **0.90** | **0.90** | **0.90** 🏆 |
-| XGBoost + Word2Vec           |   0.89   |   0.89   |   0.89   |    0.89     |
-| Bi-LSTM (Keras)              |   0.87   |   0.87   |   0.87   |    0.87     |
-| IndoBERT (Transformer)       |   0.88   |   0.88   |   0.88   |    0.88     |
+| Skema | Algoritma           | Representasi Fitur | Split Data | Akurasi Latih (%) | Akurasi Uji (%) |
+| :---: | :------------------ | :----------------- | :--------: | :---------------: | :-------------: |
+|   1   | **Random Forest**   | **Word2Vec**       | **90/10**  |       99.98       |  **92.25** 🏆   |
+|   2   | XGBoost             | Word2Vec           |   80/20    |       99.74       |      90.32      |
+|   3   | Logistic Regression | TF-IDF             |   80/20    |       91.98       |      87.26      |
+|   4   | Bi-LSTM             | Embedding Layer    |   80/20    |       97.71       |      91.81      |
 
 > **Analisis Hasil Komparatif:**
-> Secara mengejutkan, model **Random Forest dengan embedding Word2Vec** muncul sebagai pemenang dengan performa tertinggi di semua metrik. Ini adalah temuan penting yang menunjukkan bahwa:
 >
-> - **_Feature Engineering_ Masih Relevan**: Representasi fitur yang baik (Word2Vec) dapat membuat model klasik menjadi sangat kompetitif.
-> - **Kompleksitas Bukan Segalanya**: Model _Deep Learning_ yang lebih kompleks (Bi-LSTM dan IndoBERT) tidak selalu menjamin performa yang lebih baik, terutama pada dataset dengan ukuran sedang dan tugas klasifikasi yang relatif jelas.
-> - **Efisiensi**: Model Random Forest cenderung lebih cepat untuk dilatih dibandingkan dengan model _deep learning_, menjadikannya pilihan yang sangat praktis dan efisien.
+> - **Model Juara**: **Skema 1 (Random Forest + Word2Vec)** secara jelas menjadi pemenang dengan **akurasi uji tertinggi mencapai 92.25%**. Penggunaan 90% data untuk pelatihan terbukti efektif memberikan performa generalisasi terbaik pada data baru.
+> - **Performa Model Lain**:
+>   - **Bi-LSTM** (Skema 4) menunjukkan performa yang sangat kompetitif dan menjadi yang terbaik kedua dengan akurasi 91.81%, membuktikan kekuatan _deep learning_ pada data sekuensial.
+>   - **XGBoost** (Skema 2) juga memberikan hasil yang solid di atas 90%, namun sedikit di bawah RF dan Bi-LSTM.
+>   - **Logistic Regression** (Skema 3) berfungsi sebagai _baseline_ yang baik, namun performanya paling rendah, menandakan bahwa representasi fitur yang lebih canggih (Word2Vec, Embedding) memberikan nilai tambah yang signifikan.
+> - **Overfitting**: Terlihat kecenderungan _overfitting_ pada model berbasis _tree_ (RF dan XGBoost) di mana akurasi latih sangat tinggi (mendekati 100%). Namun, Random Forest tetap mampu melakukan generalisasi dengan lebih baik pada data uji.
 
 ---
 
 ## 💡 Uji Coba Model Terbaik
 
-Model juara, **Random Forest**, kemudian diuji kemampuannya untuk melakukan inferensi pada kalimat-kalimat baru:
+Model juara, **Random Forest (Skema 1)**, kemudian diuji kemampuannya untuk melakukan inferensi pada kalimat-kalimat baru:
 
 | Kalimat Uji                                   | Prediksi Sentimen |
 | :-------------------------------------------- | :---------------: |
